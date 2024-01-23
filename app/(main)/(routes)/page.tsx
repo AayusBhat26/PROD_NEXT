@@ -25,3 +25,7 @@ export default function Home() {
 // 1) in order to keep all the similar routes in a single folder 
 // 2) we can give same or similar layouts to all the pages which are directly affecting the routes.
 // in order to acheive the 2nd, we have to create a new file outside all the route folders and inside the organizational folder, that file will be named as layout.tsx
+
+
+
+// current: https://youtu.be/ZbX4Ok9YX94?t=2278
