@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.29.5",
     "@radix-ui/react-slot": "^1.0.2",
+    "@splinetool/react-spline": "^2.2.6",
+    "@splinetool/runtime": "^1.0.33",
     "class-variance-authority": "^0.7.0",
     "clear": "^0.1.0",
     "clsx": "^2.1.0",

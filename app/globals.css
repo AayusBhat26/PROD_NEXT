@@ -77,3 +77,16 @@ html,body,:root{
     @apply bg-background text-foreground;
   }
 }
+.cl-internal-b3fm6y{
+  display: none;
+}
+/* .cl-formButtonPrimary{
+  background: black;
+  color: blue;
+  font-weight: 1000;
+  font-size:12px;
+} */
+.cl-card{
+  border:none;
+  padding:30px;
+}

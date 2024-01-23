@@ -26,3 +26,4 @@ export default function Home() {
 // 2) we can give same or similar layouts to all the pages which are directly affecting the routes.
 // in order to acheive the 2nd, we have to create a new file outside all the route folders and inside the organizational folder, that file will be named as layout.tsx
 
+// to mount any providers, we mount the same inside route layout.
