@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.5",
+    "@clerk/themes": "^1.7.9",
     "@radix-ui/react-slot": "^1.0.2",
     "@splinetool/react-spline": "^2.2.6",
     "@splinetool/runtime": "^1.0.33",
@@ -19,6 +20,7 @@
     "git": "^0.1.5",
     "lucide-react": "^0.309.0",
     "next": "14.0.4",
+    "node": "^18.17.0",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.2.0",

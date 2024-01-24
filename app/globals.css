@@ -4,6 +4,7 @@
 
 html,body,:root{
   height:100%;
+  width:100%;
 }
 @layer base {
   :root {
@@ -80,13 +81,17 @@ html,body,:root{
 .cl-internal-b3fm6y{
   display: none;
 }
-/* .cl-formButtonPrimary{
-  background: black;
-  color: blue;
+.cl-formButtonPrimary{
+  background: white;
+  color: black;
   font-weight: 1000;
   font-size:12px;
-} */
+}
 .cl-card{
-  border:none;
-  padding:30px;
+  height:80vh;
+  width:80vw;
+  display:flex;
+  justify-content:center;
+  align-items: center;
+
 }

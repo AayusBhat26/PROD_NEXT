@@ -9,15 +9,8 @@ const AuthLayout = ({children}:{
       children: React.ReactNode
 })=>{
       return (
-            // https://prod.spline.design/96IuqLusCbTuYHWj/scene.splinecode
-            // https://prod.spline.design/sIQbBqUrmSorRhRP/scene.splinecode mouse
-            <div className="h-full flex justify-between items-center bg-white">
-                  <Spline scene='https://prod.spline.design/96IuqLusCbTuYHWj/scene.splinecode' />
-                  <div>
+            <div className="h-full w-full  border-black  flex justify-center items-center bg-slate-100">
                         {children}
-                  </div>
-                  
-           
             </div>
       )
 }
