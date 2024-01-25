@@ -1,0 +1,3 @@
+prisma commands and further 
+npm install -D prisma 
+npx prisma init 
