@@ -6,15 +6,13 @@ import { db } from "@/lib/db";
 // import { PrismaClient } from "@prisma/client";
 import { initialProfile } from "@/lib/initial-profile";
 import { UserButton } from "@clerk/nextjs";
+import { InitialModal } from "@/components/modals/initial-modal";
 
 // const prisma = new PrismaClient();
 const SetupPage = async () => {
       const profile = await initialProfile();
-      // console.log(profile)
-      
       // finding whether the current profile is the part of any server.
       // todo: using db find a server which user is a part of.
-
       try {
             const server = await db.server.findFirst({
                   where: {
@@ -30,12 +28,12 @@ const SetupPage = async () => {
             }
       } catch (error) {
             console.log(error);
-            
+
       }
 
       return <div>
-            <UserButton />
-             </div>;
+            <InitialModal/>
+      </div>;
 
 
 }
