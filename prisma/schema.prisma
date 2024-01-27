@@ -1,5 +1,16 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
+enum MemberRole {
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+enum ChannelType {
+  TEXT
+  AUDIO
+  VIDEO
+}
 
 generator client {
   provider = "prisma-client-js"
@@ -8,6 +19,77 @@ generator client {
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
-  relationMode = "prisma"
 }
-// model
+
+model Profile {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String  @unique
+  name     String?
+  imageUrl String?
+  email    String  @unique
+
+  servers  Server[]
+  members  Member[]
+  channels Channel[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+// where people will connect.
+model Server {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  name       String?
+  imageUrl   String?
+  inviteCode String?
+
+  profileId String    @db.ObjectId
+  profile   Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  members   Member[]
+  channels  Channel[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+
+  @@index([profileId])
+}
+
+model Member {
+  id   String     @id @default(auto()) @map("_id") @db.ObjectId
+  role MemberRole @default(GUEST)
+
+  // Creating a relation with profile/
+  profileId String  @db.ObjectId
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  serverId  String   @db.ObjectId
+  server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@index([profileId])
+  @@index([serverId])
+}
+
+// enum ChannelType {
+//   TEXT 
+//   AUDIO
+//   VIDEO 
+// }
+model Channel {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  type      ChannelType @default(TEXT)
+  profileId String      @db.ObjectId
+  profile   Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  serverId  String      @db.ObjectId
+  server    Server      @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@index([profileId])
+  @@index([serverId])
+}
+
+
+// everytime we modify the schema.prisma file, we need to do this, 
