@@ -5,6 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { dark, neobrutalism } from '@clerk/themes'
 import { ThemeProvider } from '@/components/providers/themes-providers'
 import { cn } from '@/lib/utils'
+import ParticlBackground from '@/components/particle/particle-background'
 
 const inter = Open_Sans({ subsets: ['latin'] })
 
@@ -21,7 +22,8 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={cn(inter.className, "bg-white dark:bg-[#000000] dark:text-blue-400")}>
+        <body className={cn(inter.className, "bg-white dark:bg-[#081026] dark:text-blue-400")}>
+          <ParticlBackground />
         {/* <body className={inter.className}> */}
           <ThemeProvider attribute='class' defaultTheme='dark' enableSystem={false} storageKey='theme_prod'>
             {children}
