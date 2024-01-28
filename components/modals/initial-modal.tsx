@@ -1,8 +1,13 @@
 "use client";
+// package imports
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useEffect, useState } from "react";
 
+
+
+// shadcn imports
 import {
       Dialog,
       DialogContent,
@@ -12,12 +17,14 @@ import {
       DialogTitle
 } from "../../components/ui/dialog";
 
+
+// local uploads
 import {
       Form, FormControl, FormField, FormItem, FormLabel, FormMessage
 } from "../../components/ui/form"
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
-import { useEffect, useState } from "react";
+import { FileUpload } from "../file-upload";
 
 // todo: form schema 
 const formSchema = z.object({
@@ -51,7 +58,7 @@ export const InitialModal = () => {
       }
       if (!isMounted) return null;
       return <Dialog open={true}>
-            <DialogContent className="bg-white text-black p-0 overflow-hidden text-xs">
+            <DialogContent className="bg-white text-black p-0 overflow-hidden">
                   <DialogHeader className="pt-8 px-6">
                         <DialogTitle className="text-2xl text-center font-bold">
                               CREATE A HUB
@@ -65,6 +72,12 @@ export const InitialModal = () => {
                               <div className="space-y-8 px-6">
                                     <div className="flex items-center justify-center text-center">
                                           {/* todo: image uploading, cloudnariy. */}
+                                          <FormField  control={form.control} name="imageUrl" render={({field})=>(<FormItem>
+                                                <FormControl>
+                                                      <FileUpload endpoint='hubImage' value={field.value} onChange={field.onChange} />
+                                                </FormControl>
+                                          </FormItem>)}/>
+
                                     </div>
                                     <FormField
                                           control={form.control}
