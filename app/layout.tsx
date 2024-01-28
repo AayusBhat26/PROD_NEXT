@@ -22,14 +22,14 @@ export default function RootLayout({
     <ClerkProvider
       appearance={{
         baseTheme: [ neobrutalism],
-        variables: { colorPrimary: 'red' },
+        variables: { colorPrimary: '#6809C6' },
         signIn: {
           baseTheme: [dark],
-          variables: { colorPrimary: 'red' }
+          variables: { colorPrimary: '#6809C6' }
         },
         signUp: {
           baseTheme: [dark],
-          variables: { colorPrimary: 'red' }
+          variables: { colorPrimary: '#6809C6' }
         }
       }}
 
