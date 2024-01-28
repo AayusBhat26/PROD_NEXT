@@ -2,15 +2,14 @@ import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
-import { dark, neobrutalism } from '@clerk/themes'
 import { ThemeProvider } from '@/components/providers/themes-providers'
 import { cn } from '@/lib/utils'
-import ParticlBackground from '@/components/particle/particle-background'
+import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes';
 
 const inter = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'PROD',
+  title: 'WORKIFY',
   description: '',
 }
 
@@ -20,11 +19,23 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: [ neobrutalism],
+        variables: { colorPrimary: 'red' },
+        signIn: {
+          baseTheme: [dark],
+          variables: { colorPrimary: 'red' }
+        },
+        signUp: {
+          baseTheme: [dark],
+          variables: { colorPrimary: 'red' }
+        }
+      }}
+
+    >
       <html lang="en" suppressHydrationWarning>
-        <body className={cn(inter.className, "bg-white dark:bg-[#081026] dark:text-blue-400")}>
-          <ParticlBackground />
-        {/* <body className={inter.className}> */}
+        <body className={cn(inter.className, "text-red-200 bg-[#0c0d0d]")}>
           <ThemeProvider attribute='class' defaultTheme='dark' enableSystem={false} storageKey='theme_prod'>
             {children}
           </ThemeProvider>

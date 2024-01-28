@@ -78,7 +78,7 @@ html,body,:root{
     @apply bg-background text-foreground;
   }
 }
-.cl-internal-b3fm6y{
+.cl-internal-7ktxih{
   display: none;
 }
 .cl-formButtonPrimary{
@@ -87,5 +87,9 @@ html,body,:root{
   font-weight: 1000;
   font-size:12px;
 }
+ 
+.cl-signIn-start{
+  display: flex;
+  flex-direction:column-reverse;
+}
 
-/* // installing next-themes for dark and light themes. */

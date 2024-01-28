@@ -25,6 +25,7 @@ import {
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { FileUpload } from "../file-upload";
+import { UserButton } from "@clerk/nextjs";
 
 // todo: form schema 
 const formSchema = z.object({
@@ -59,6 +60,9 @@ export const InitialModal = () => {
       if (!isMounted) return null;
       return <Dialog open={true}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
+                  {/* <div > <UserButton /></div> */}
+            
+
                   <DialogHeader className="pt-8 px-6">
                         <DialogTitle className="text-2xl text-center font-bold">
                               CREATE A HUB
