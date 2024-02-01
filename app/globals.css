@@ -81,36 +81,3 @@ html,body,:root{
 .cl-internal-1ukv4gz{
   display: none;
 }
-.cl-formButtonPrimary{
-  background: #6809C6;
-  color: black;
-  font-weight: 1000;
-  font-size:12px;
-}
-.cl-card{
-  /* width:60vw; */
-  height:150%;
-  padding-top:100px;
-}
-.cl-signIn-start{
-  display: flex;
-  flex-direction:column;
-}
-
-.cl-socialButtonsIconButton{
-  background:#6809C6;
-}
-.cl-footerAction{
-  /* border:1px solid red; */
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  color:white;
-  font-size:16px;
-  font-bold:1000;
-}
-/* .cl-footerActionText {
-  color:white;
-  font-size:16px;
-
-} */

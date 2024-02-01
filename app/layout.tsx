@@ -19,23 +19,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: [ neobrutalism],
-        variables: { colorPrimary: '#6809C6' },
-        signIn: {
-          baseTheme: [dark],
-          variables: { colorPrimary: '#6809C6' }
-        },
-        signUp: {
-          baseTheme: [dark],
-          variables: { colorPrimary: '#6809C6' }
-        }
-      }}
-
-    >
+    <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={cn(inter.className, "text-red-200 bg-[#0c0d0d]")}>
+        <body className={cn(inter.className, "bg-white dark:bg-[#0c0d0d]")}>
           <ThemeProvider attribute='class' defaultTheme='dark' enableSystem={false} storageKey='theme_prod'>
             {children}
           </ThemeProvider>
