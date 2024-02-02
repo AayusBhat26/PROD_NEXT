@@ -4,7 +4,7 @@ import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from '@/components/providers/themes-providers'
 import { cn } from '@/lib/utils'
-import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes';
+import { ModalProvider } from '@/components/providers/modal-providers'
 
 const inter = Open_Sans({ subsets: ['latin'] })
 
@@ -23,6 +23,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={cn(inter.className, "bg-white dark:bg-[#0c0d0d]")}>
           <ThemeProvider attribute='class' defaultTheme='dark' enableSystem={false} storageKey='theme_prod'>
+            <ModalProvider/>
             {children}
           </ThemeProvider>
         </body>
