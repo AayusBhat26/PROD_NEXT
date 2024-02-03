@@ -62,10 +62,10 @@ export const CreateHubModal = () => {
 
     try {
       const data = await axios.post("/api/hubs/", values)
-      console.log(data);
-      
+      // console.log(data);
       form.reset();
       router.refresh();
+      onClose();
     } catch (error) {
       console.log(error);
       
