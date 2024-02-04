@@ -32,7 +32,7 @@ export default function RootLayout({
       }
     }} >
       <html lang="en" suppressHydrationWarning>
-        <body className={cn(inter.className, "  bg-white dark:bg-[#0c0d0d]")}>
+        <body className={cn(inter.className, "  bg-white dark:bg-[#161618]")}>
           <ThemeProvider attribute='class' defaultTheme='dark' enableSystem={false} storageKey='theme_prod'>
             <ModalProvider/>
             {children}
