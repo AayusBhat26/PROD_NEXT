@@ -1,3 +1,4 @@
+import { HubSidebar } from "@/components/hub/hub-sidebar";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
@@ -30,17 +31,16 @@ const HubIdLayout = async({
                   }
             }
       });
-      // if the hub is delete or not found or the user is not a part of that hub.
       if(!server){
+            // server is not available
             return redirect("/")
       }
       return ( <div className="h-full ">
-            <div className="hidden md:flex h-full w-60 z-20 flex-col fixed inset-y-0 ">
+            <div className="hidden md:flex h-full w-60 z-20 flex-col fixed inset-y-0  ">
+            <HubSidebar hubId={params.hubsId}/>
             </div>
-            the subHub sidebr
-            <main className="h-full md:pl-60">
+            <main className="h-full md:pl-[72px]">
                   {children}
-                  {/* look to apply resizeable shadcn */}
             </main>
             
       </div> );
