@@ -2,6 +2,7 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { ChannelType } from "@prisma/client";
 import { redirect } from "next/navigation";
+import { HubHeader } from "./hub-header";
 
 interface HubSidebarProps{
       hubId: string;
@@ -11,6 +12,7 @@ export const HubSidebar = async({
 }: HubSidebarProps)=>{
       const profile = await currentProfile();
       if(!profile) return redirect('/');
+      
 
       const server = await db.server.findUnique({
             where:{
@@ -46,7 +48,7 @@ export const HubSidebar = async({
       const role = server.members.find((member)=>member.profileId === profile.id )?.role;
       return (
             <div className="flex flex-col h-full  w-full text-primary shadow-md rounded-lg dark:bg-[#19191b] bg-[#F2F3F5]" >
-                  HUB SIDEBAR
+                  <HubHeader server={server} role={role}/>
             </div>
       )
 }

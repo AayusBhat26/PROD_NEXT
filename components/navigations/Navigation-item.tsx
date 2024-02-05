@@ -7,8 +7,11 @@ import {
 import { cn } from "@/lib/utils";
 
 import { ActionTooltip } from "../actions-tooltip";
-import { useEffect, useState } from "react";
-
+import {
+      HoverCard,
+      HoverCardContent,
+      HoverCardTrigger,
+} from "@/components/ui/hover-card"
 
 interface NavigationItemProps{
       id?:string;
@@ -47,13 +50,26 @@ export const NavigationItem = ({
                               "relative group flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden",
                               params?.serverId === id && "bg-primary/10 text-primary rounded-[16px]"
                         )}>
-                              <Image
-                                    fill
-                                    src={imageUrl || ""}
-                                    alt="Channel"
-                              />
+                              <HoverCard >
+                   <HoverCardTrigger>
+                                          <Image
+                                                fill
+                                                src={imageUrl || ""}
+                                                alt="Channel"
+                                          />
+                   </HoverCardTrigger>
+                                    <HoverCardContent className="flex relative mr-[100px] mt-[-100px] w-[200px] h-[200px]">
+                                          <Image
+                                                fill
+                                                src={imageUrl || ""}
+                                                alt="Channel"
+                                          />
+                   </HoverCardContent>
+             </HoverCard>
+
                         </div>
                   </button>
             </ActionTooltip>
+            
       )
 }
