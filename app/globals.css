@@ -160,7 +160,7 @@ html,body,:root{
 }
 
 .breathing-border {
-  transition: transform 0.3s ease-in-out; /* Add transition for smooth effect */
+  transition: transform 0.5s ease-in-out; /* Add transition for smooth effect */
 
   /* Initial styles */
   border: 2px solid transparent;

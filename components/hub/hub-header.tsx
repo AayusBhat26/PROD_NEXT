@@ -4,11 +4,8 @@ import { HubWithMembersWithProfiles } from "@/types";
 import { MemberRole } from "@prisma/client";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator } from "../ui/dropdown-menu";
 import { ChevronDown, LogOutIcon, PlusCircle, Settings, Trash2Icon, UserPlus, Users } from "lucide-react";
-import {
-      HoverCard,
-      HoverCardContent,
-      HoverCardTrigger,
-} from "@/components/ui/hover-card"
+
+import { useModal } from "../hooks/use-modal-store";
 
 interface HubHeaderProps {
       server: HubWithMembersWithProfiles;
@@ -18,6 +15,7 @@ interface HubHeaderProps {
 export const HubHeader = ({
       server, role
 }: HubHeaderProps) => {
+      const {onOpen}= useModal();
       const isAdmin = role === MemberRole.ADMIN;
       const isModerator = isAdmin || role === MemberRole.MODERATOR;
 
@@ -41,7 +39,9 @@ export const HubHeader = ({
 
                         {
                               isModerator && (
-                                    <DropdownMenuItem className="text-blue-500 dark:text-blue-400 px-3 py-2 text-sm cursor-pointer">
+                                    <DropdownMenuItem 
+                                    onClick={()=>onOpen("invite", {server:server})}
+                                    className="text-blue-500 dark:text-blue-400 px-3 py-2 text-sm cursor-pointer">
                                           Invite others.
                                           <UserPlus className='h-4 w-5 ml-auto' />
 
