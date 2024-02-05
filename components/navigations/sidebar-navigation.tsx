@@ -1,26 +1,29 @@
-import { redirect } from "next/navigation";
-import { db } from "@/lib/db";      
-import { UserButton } from "@clerk/nextjs";
 
+import { redirect } from "next/navigation";    
+import { UserButton } from "@clerk/nextjs";
 import { currentProfile } from "@/lib/current-profile";
 import { NavigationAction } from "./navigation-action";
 import { Separator } from "../ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
 import { NavigationItem } from "./Navigation-item";
 import { ModeToggle } from "../mode-toggle";
+import { Servers } from "@/lib/servers";
 const TaskbarNavigation = async () => {
       const profile = await currentProfile();
       if (!profile) return redirect('/');
-      const servers = await db.server.findMany({ 
+
+      const servers =  await Servers();
+      // const servers = await db.server.findMany({ 
             
-            where: {
-                  members: {
-                        some: {
-                              profileId: profile.id
-                        }
-                  }
-            }
-      });
+      //       where: {
+      //             members: {
+      //                   some: {
+      //                         profileId: profile.id
+      //                   }
+      //             }
+      //       }
+      // });
+
       return (
             <div
                   className="space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-[#212329] bg-[#212329] py-2 " >
@@ -30,7 +33,7 @@ const TaskbarNavigation = async () => {
                         className="h-[2px] bg-blue-400 dark:bg-blue-800 rounded-md w-10 mx-auto"
                   />
                   <ScrollArea className="flex-1 w-full">
-                        {servers.map((server) => (
+                        {servers?.map((server) => (
                               <div key={server.id} className="mb-4">
                                     <NavigationItem
                                           id={server.id}
@@ -43,6 +46,7 @@ const TaskbarNavigation = async () => {
                   <div className="pb-3 mt-auto flex items-center flex-col gap-y-4">
                         <ModeToggle />
                         <UserButton
+                        
                               afterSignOutUrl="/"
                               appearance={{
                                     elements: {
