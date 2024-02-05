@@ -106,7 +106,7 @@ html,body,:root{
   animation: breathing 2s ease-in-out infinite; /* Increased speed */
 }
 
-.glowing-border:hover {
+/* .glowing-border:hover {
   border-radius: 90px;
   box-shadow: 0px 0px 25px purple;
 }
@@ -143,4 +143,34 @@ html,body,:root{
   75% {
     transform: translate(-50px) rotate(270deg);
   }
+} */
+/* Your stylesheet.css or styles.scss */
+
+/* YourComponent.css or styles.scss */
+
+/* YourComponent.css or styles.scss */
+
+@keyframes breathe {
+  0%, 100% {
+    border: 2px solid transparent;
+  }
+  50% {
+    border: 2px solid #4299e1; /* Adjust the blue-500 color code as needed */
+  }
 }
+
+.breathing-border {
+  transition: transform 0.3s ease-in-out; /* Add transition for smooth effect */
+
+  /* Initial styles */
+  border: 2px solid transparent;
+  transform: scale(1);
+}
+
+.breathing-border {
+  /* Hover styles */
+  border: 2px solid #1F2544; /* Adjust the blue-500 color code as needed */
+  animation: breathe 2s infinite;
+  transform: scale(1.05); /* Adjust the scale factor as needed */
+}
+

@@ -16,7 +16,7 @@ const TaskbarNavigation = async () => {
 
       return (
             <div
-                  className="space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-[#212329] bg-[#212329] py-2 " >
+                  className="space-y-4 flex flex-col items-center h-full text-black dark:text-white w-full dark:bg-[#212329] bg-[#212329] py-2 " >
 
                   <NavigationAction />
                   <Separator

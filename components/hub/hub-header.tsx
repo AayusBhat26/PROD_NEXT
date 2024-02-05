@@ -2,8 +2,8 @@
 
 import { HubWithMembersWithProfiles } from "@/types";
 import { MemberRole } from "@prisma/client";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "../ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator } from "../ui/dropdown-menu";
+import { ChevronDown, LogOutIcon, PlusCircle, Settings, Trash2Icon, UserPlus, Users } from "lucide-react";
 import {
       HoverCard,
       HoverCardContent,
@@ -22,33 +22,83 @@ export const HubHeader = ({
       const isModerator = isAdmin || role === MemberRole.MODERATOR;
 
       return (
-      
-                  <DropdownMenu>
-                        <DropdownMenuTrigger className="focus:outline-none" asChild>
-                              <button className="w-full text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 borderd-b-2 hover:bg-blue-100 dark:hover:bg-slate-800/50 transition">
-                                    {server.name}
-                                   
 
-                                          <ChevronDown className=" h-5 w-5 ml-auto" />
-                                   
-                              </button>
+            <DropdownMenu>
+                  <DropdownMenuTrigger className="focus:outline-none" asChild>
+                        <button className="w-full text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 borderd-b-2 hover:bg-blue-100 dark:hover:bg-slate-800/50 transition">
+                              {server.name}
 
 
-                        </DropdownMenuTrigger>
-                        
+                              <ChevronDown className=" h-5 w-5 ml-auto" />
 
-                              <DropdownMenuContent className="w-56 h-20 flex  justify-center  align-center text-xs font-medium text-black dark:text-neutral-100 space-y-[2px] ">
+                        </button>
 
-                                    {
-                                          isModerator && (
-                                                <DropdownMenuItem className="w-full flex justify-center align-center">
-                                                      Invite others.
-                                                </DropdownMenuItem>
-                                          )
-                                    }
-                              </DropdownMenuContent>
 
-                  </DropdownMenu>
+                  </DropdownMenuTrigger>
+
+
+                  <DropdownMenuContent className="w-56   text-black dark:text-neutral-100 space-y-[2px] hover:">
+
+                        {
+                              isModerator && (
+                                    <DropdownMenuItem className="text-blue-500 dark:text-blue-400 px-3 py-2 text-sm cursor-pointer">
+                                          Invite others.
+                                          <UserPlus className='h-4 w-5 ml-auto' />
+
+                                    </DropdownMenuItem>
+                              )
+                        }
+                        {
+                              isAdmin && (
+                                    <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer">
+                                          Server Settings
+                                          <Settings className='h-4 w-5 ml-auto' />
+
+                                    </DropdownMenuItem>
+                              )
+                        }
+
+                        {
+                              isAdmin && (
+                                    <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer">
+                                          Manage Members
+                                          <Users className='h-4 w-5 ml-auto' />
+                                    </DropdownMenuItem>
+                              )
+                        }
+                        {
+                              isModerator && (
+                                    <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer">
+                                          Create SUB HUB
+                                          <PlusCircle className='h-4 w-5 ml-auto' />
+                                    </DropdownMenuItem>
+                              )
+                        }
+                        {
+                              isModerator && (
+                                    <DropdownMenuSeparator />
+                              )
+                        }
+                        {
+                              isAdmin && (
+                                    <DropdownMenuItem className="text-rose-600 px-3 py-2 text-sm cursor-pointer">
+                                          Delete HUB
+                                          <Trash2Icon className='h-4 w-5 ml-auto' />
+                                    </DropdownMenuItem>
+                              )
+                        }
+                        {/* admins cannot leave the server, omly moderator and guest users can */}
+                        {
+                              !isAdmin && (
+                                    <DropdownMenuItem className="text-rose-600 px-3 py-2 text-sm cursor-pointer">
+                                          Leave The Hub
+                                          <LogOutIcon className='h-4 w-5 ml-auto' />
+                                    </DropdownMenuItem>
+                              )
+                        }
+                  </DropdownMenuContent>
+
+            </DropdownMenu>
 
       )
 }
