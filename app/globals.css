@@ -81,3 +81,66 @@ html,body,:root{
 .cl-internal-1ukv4gz{
   display: none;
 }
+
+.glowing-border {
+  position: relative;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px purple;
+  overflow: hidden;
+}
+
+.glowing-border::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 10px solid transparent; /* Increased border size */
+  border-image: linear-gradient(purple, transparent) 1;
+  border-radius: inherit;
+  animation: breathing 2s ease-in-out infinite; /* Increased speed */
+}
+
+.glowing-border:hover {
+  border-radius: 90px;
+  box-shadow: 0px 0px 25px purple;
+}
+
+.small-ball {
+  position: absolute;
+  content: "";
+  width: 40px;
+  height: 40px;
+  background-color: #00f;
+  border-radius: 50%;
+  animation: runAround 4s linear infinite;
+}
+
+@keyframes breathing {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes runAround {
+  0%, 100% {
+    transform: translate(50px) rotate(0deg);
+  }
+  25% {
+    transform: translate(50px) rotate(90deg);
+  }
+  50% {
+    transform: translate(-50px) rotate(180deg);
+  }
+  75% {
+    transform: translate(-50px) rotate(270deg);
+  }
+}

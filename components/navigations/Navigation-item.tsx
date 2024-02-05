@@ -17,14 +17,17 @@ interface NavigationItemProps{
       id?:string;
       imageUrl?: string;
       name?:string;
+      createdAt?: Date;
 };
 
 export const NavigationItem = ({
-      id, imageUrl, name
+      id, imageUrl, name, createdAt
 }:NavigationItemProps) =>{
     
       const params = useParams();
       const router = useRouter();
+      // console.log(createdAt);
+      
       const onClick = () => {
 
             router.push(`/hubs/${id}`)
@@ -58,12 +61,28 @@ export const NavigationItem = ({
                                                 alt="Channel"
                                           />
                    </HoverCardTrigger>
-                                    <HoverCardContent className="flex relative mr-[100px] mt-[-100px] w-[200px] h-[200px]">
-                                          <Image
-                                                fill
-                                                src={imageUrl || ""}
-                                                alt="Channel"
-                                          />
+      
+                                    <HoverCardContent className=" flex  h-[260px] w-[30vw] mr-[150px] mt-[-100px]">
+                                          <div className="w-[15vw] flex h-full flex-col  text-white " >
+                                                <div className=" font-[20px]">
+                                                      {name}
+                                                </div>
+                                                <div className="flex justify-center align-bottom w-full h-full line-clamp-2  text-center">
+                                                      {
+                                                            createdAt?.toString().slice(0,16)
+                                                      }
+                                                </div>
+                                          </div>
+                                          <div className="  w-[15vw] h-full  relative flex justify-center align-center   ">
+                                                <Image
+                                                      className="glowing-border"
+                                                     fill
+                                                     style={{borderRadius:'20px'}}
+                                                      src={imageUrl || ""}
+                                                      alt="Channel"
+                                                />
+                                        </div>
+
                    </HoverCardContent>
              </HoverCard>
 

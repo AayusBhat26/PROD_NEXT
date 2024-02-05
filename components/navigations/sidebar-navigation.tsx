@@ -13,16 +13,6 @@ const TaskbarNavigation = async () => {
       if (!profile) return redirect('/');
 
       const servers =  await Servers();
-      // const servers = await db.server.findMany({ 
-            
-      //       where: {
-      //             members: {
-      //                   some: {
-      //                         profileId: profile.id
-      //                   }
-      //             }
-      //       }
-      // });
 
       return (
             <div
@@ -39,6 +29,7 @@ const TaskbarNavigation = async () => {
                                           id={server.id}
                                           name={server.name || ''}
                                           imageUrl={server.imageUrl || ''}
+                                          createdAt={server.createdAt ||''}
                                     />
                               </div>
                         ))}
