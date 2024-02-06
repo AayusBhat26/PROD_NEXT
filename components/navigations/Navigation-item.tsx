@@ -26,8 +26,6 @@ export const NavigationItem = ({
 
       const params = useParams();
       const router = useRouter();
-      // console.log(createdAt);
-
       const onClick = () => {
 
             router.push(`/hubs/${id}`)
@@ -45,14 +43,14 @@ export const NavigationItem = ({
                         className="group relative flex items-center  "
                   >
                         <div className={cn(
-                              "absolute left-0 bg-blue-400 rounded-r-full transition-all w-[4px]",
+                              "absolute left-0 bg-red-400 rounded-r-full transition-all w-[4px]",
                               params?.serverId !== id && "group-hover:h-[50px]",
                               params?.serverId === id ? "h-[36px]" : "h-[22px]",
                               params?.serverId !== id && "group-focus:h-[50px]"
                         )} />
                         <div className={cn(
                               "relative group flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden",
-                              params?.serverId === id && "bg-primary/10 text-primary rounded-[16px]"
+                              params?.serverId === id && "bg-primary text-primary rounded-[16px]"
                         )}>
                               <HoverCard >
                                     <HoverCardTrigger>
@@ -63,7 +61,7 @@ export const NavigationItem = ({
                                           />
                                     </HoverCardTrigger>
 
-                                    <HoverCardContent className=" text-black flex  h-[260px] w-[30vw] mr-[150px] mt-[-100px]">
+                                    <HoverCardContent className=" text-black flex  h-[260px] w-[30vw] mr-[150px] mt-[-100px] md:flex justify-center align-middle">
                                           <div className="w-[15vw] flex h-full flex-col  text-white " >
                                                 <div className=" text-black dark:text-white font-bold mb-[20px]">
                                                       {name}
@@ -74,7 +72,7 @@ export const NavigationItem = ({
                                                       }
                                                 </div>
                                           </div>
-                                          <div className="  w-[12vw] h-full  relative  justify-center align-center  hidden lg:block ">
+                                          <div className="  w-[15vw] h-full  relative  justify-center align-center  hidden lg:block ">
                                                 <Image
                                                       className="breathing-border"
                                                       fill
