@@ -15,7 +15,7 @@ interface HubHeaderProps {
 export const HubHeader = ({
       server, role
 }: HubHeaderProps) => {
-      const {onOpen}= useModal();
+      const { onOpen } = useModal();
       const isAdmin = role === MemberRole.ADMIN;
       const isModerator = isAdmin || role === MemberRole.MODERATOR;
 
@@ -39,9 +39,9 @@ export const HubHeader = ({
 
                         {
                               isModerator && (
-                                    <DropdownMenuItem 
-                                    onClick={()=>onOpen("invite", {server:server})}
-                                    className="text-blue-500 dark:text-blue-400 px-3 py-2 text-sm cursor-pointer">
+                                    <DropdownMenuItem
+                                          onClick={() => onOpen("invite", { server: server })}
+                                          className="text-blue-500 dark:text-blue-400 px-3 py-2 text-sm cursor-pointer">
                                           Invite others.
                                           <UserPlus className='h-4 w-5 ml-auto' />
 
@@ -50,7 +50,7 @@ export const HubHeader = ({
                         }
                         {
                               isAdmin && (
-                                    <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer">
+                                    <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer" onClick={()=>onOpen('editHub', {server})} >
                                           Server Settings
                                           <Settings className='h-4 w-5 ml-auto' />
 
@@ -60,7 +60,9 @@ export const HubHeader = ({
 
                         {
                               isAdmin && (
-                                    <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer">
+                                    <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer"
+                                    onClick={()=>onOpen('members', {server})}
+                                    >
                                           Manage Members
                                           <Users className='h-4 w-5 ml-auto' />
                                     </DropdownMenuItem>
