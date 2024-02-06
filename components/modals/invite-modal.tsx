@@ -14,8 +14,9 @@ import { Label } from "../ui/label";
 import { CheckIcon, Copy, RefreshCw } from "lucide-react";
 import { useOrigin } from "../hooks/use-origin";
 import { useState } from "react";
+import axios from "axios";
 export const InviteModal = () => {
-  const {isOpen, onClose, type, data}= useModal();
+  const {isOpen, onClose, type, data, onOpen}= useModal();
   const origin = useOrigin();
   const isModalOpen = isOpen && type==="invite";
   const {server} = data;
@@ -28,6 +29,17 @@ export const InviteModal = () => {
     setTimeout(()=>{
       setCopied(false)
     }, 1000);
+  }
+  const onNew = async ()=>{
+    try {
+      setIsLoading(true);
+      const response = await axios.patch(`/api/hubs/${server?.id}/invite-code`);
+      onOpen("invite", {server:response.data});
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setIsLoading(false);
+    }
   }
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose} >
@@ -42,14 +54,14 @@ export const InviteModal = () => {
             SUB-HUB INVITE LINK
             </Label>
             <div className="flex items-center mt-2 gap-x-2">
-            <Input className="bg-zinc-300/500 border-0 focus-visible:ring-0 text-black dark:text-white focus-visible:ring-offset-0" value={inviteUrl}
+            <Input disabled={isLoading} className="bg-zinc-300/500 border-0 focus-visible:ring-0 text-black dark:text-white focus-visible:ring-offset-0" value={inviteUrl}
               />
-            <Button size={"icon"} onClick={onCopy} className="hover:bg-blue-600 transition ease-linear">
+            <Button disabled={isLoading} size={"icon"} onClick={onCopy} className="hover:bg-blue-600 transition ease-linear">
               {copied ? <CheckIcon className="w-4 h-4" /> : <Copy  className="w-4 h-4" />}
                 
               </Button> 
             </div>
-            <Button variant={'link'} size={'sm'} className="text-xs text-zinc-500 mt-4 font-extrabold">
+          <Button disabled={isLoading} onClick={onNew} variant={'link'} size={'sm'} className="text-xs text-zinc-500 mt-4 font-extrabold">
               Generate A New SUB-HUB Link
               <RefreshCw className="w-4 h-4 ml-2" />
             </Button>
