@@ -31,8 +31,8 @@ export default function RootLayout({
         variables: { colorPrimary: '#6809C6' }
       }
     }} >
-      <html lang="en" suppressHydrationWarning>
-        <body className={cn(inter.className, "  bg-white dark:bg-[#161618]")}>
+      <html lang="en" >
+        <body className={cn(inter.className, "  bg-white dark:bg-[#161618]")} suppressHydrationWarning>
           <ThemeProvider attribute='class' defaultTheme='dark' enableSystem={false} storageKey='theme_prod'>
             <ModalProvider/>
             {children}
