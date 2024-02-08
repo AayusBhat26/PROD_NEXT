@@ -1,16 +1,17 @@
 "use client";
 // package imports
 import { useForm } from "react-hook-form";
+import qs from "query-string"
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { ChannelType } from "@prisma/client";
 
 // shadcn imports
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -27,19 +28,28 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { FileUpload } from "../file-upload";
 import { useModal } from "../hooks/use-modal-store";
-
+import {
+  Select,
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue
+} from "@/components/ui/select"
 // todo: form schema
 const formSchema = z.object({
-  name: z.string().min(3, {
-    message: "HUB with this personality requires a better Name!!!",
+  name: z.string().min(1, {
+    message: "SUB HUB name is required.",
+    // preventing the subname as the general name
+  }).refine(name => name !== "Common Chat" , {
+    message:"Sub Hub name cannot be 'Common Chat '"
   }),
+  type: z.nativeEnum(ChannelType)
 });
 export const CreateChannelModal = () => {
   const { isOpen, onClose, type } = useModal();
   const router = useRouter();
-
+  const params = useParams();
 
   const isModalOpen = isOpen && type === "createChannel";
 
@@ -47,25 +57,34 @@ export const CreateChannelModal = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: ""
+      name: "", 
+      // default type of sub hub is text.
+      type:ChannelType.TEXT,
     },
   });
 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-
     try {
-      const data = await axios.post("/api/hubs/", values)
-      // console.log(data);
+      console.log(params);
+      
+      const url = qs.stringifyUrl({
+        url: "/api/channels",
+        query: {
+          serverId: params?.hubsId
+        }
+      });
+      await axios.post(url, values);
+
       form.reset();
       router.refresh();
       onClose();
     } catch (error) {
       console.log(error);
-
     }
-  };
+  }
+
   const handleClose = () => {
     form.reset();
     onClose();
@@ -75,11 +94,8 @@ export const CreateChannelModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            CREATE A HUB
+            CREATE A SUB HUB
           </DialogTitle>
-          <DialogDescription className="text-center text-blue-300">
-            Provide your HUB a personality make over.
-          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -94,19 +110,43 @@ export const CreateChannelModal = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-blue-500 dark:text-secondary/60">
-                      HUB NAME
+                      SUB-HUB NAME
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/40 border-0 focus-visible:ring-1 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter the HUB Name."
+                        placeholder="Enter the SUB-HUB Name."
                         {...field}
                       />
                     </FormControl>
                     <FormMessage className="text-blue-300 font-bold text-xs" />
                   </FormItem>
                 )}
+              />
+              <FormField control={form.control} name="type" render={({field})=>(<FormItem>
+                <FormLabel>Sub Hub Type</FormLabel>
+                <Select disabled={isLoading} onValueChange={field.onChange}  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger 
+                    className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:rignt-offset-0 capitalize outline-none"
+                    >
+                      <SelectValue placeholder="Select A Sub Hub Type." />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {Object.values(ChannelType).map((type)=>(
+                      <SelectItem key={type} value={type} className="capitalize">
+                        {
+                          type.toLowerCase()
+                        }
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage/>
+              </FormItem>)}
               />
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
@@ -115,7 +155,7 @@ export const CreateChannelModal = () => {
                 variant={"initial"}
                 disabled={isLoading}
               >
-                Create the DAMN HUB!!!
+                Create
               </Button>
             </DialogFooter>
           </form>
