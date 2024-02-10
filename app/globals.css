@@ -176,3 +176,50 @@ html,body,:root{
 .cl-userButtonPopoverFooter{
   display: none;
 }
+.cl-internal-1tzju74{
+  background:hsl(270deg 2.65% 6.28%);
+  cololr:white;
+}
+.cl-navbarButton,.cl-headerSubtitle{
+  color:#c700c7;
+}
+.cl-headerTitle{
+  color:#c700c7;
+}
+.cl-profileSectionTitleText, .cl-internal-wsfb2o,.cl-internal-1f1y0d9,.cl-internal-cbs77g{
+  color:white;
+}
+.cl-internal-1jn827z{
+  color:whitesmoke;
+}
+.cl-internal-1x84u7h{
+  color:#c700c7;
+  font-size:12px;
+  letter-spacing:'10px'
+}
+.cl-internal-zglecb{
+  color:red;
+}
+.cl-userButtonPopoverCard{
+  background:#161618;
+}
+.cl-userPreviewSecondaryIdentifier,.cl-userButtonPopoverActionButtonText{
+  color:white;
+}
+.cl-userButtonPopoverActionButtonIconBox{
+  background: white;
+  wdith:40px;
+  height:40px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:5px;
+  
+}
+.cl-userButtonPopoverActionButtonIcon {
+  height:20px;
+  width:20px;
+}
+.cl-userButtonPopoverActionButton:hover{
+  background:#212329;
+}
