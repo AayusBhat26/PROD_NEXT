@@ -10,6 +10,7 @@ enum ChannelType {
   TEXT
   AUDIO
   VIDEO
+  TASK
 }
 
 generator client {

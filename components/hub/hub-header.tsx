@@ -18,7 +18,10 @@ export const HubHeader = ({
       const { onOpen } = useModal();
       const isAdmin = role === MemberRole.ADMIN;
       const isModerator = isAdmin || role === MemberRole.MODERATOR;
-
+      // flow of working
+      // we will be creating a new modal in the components/modals folder, now inside the modal provider, we will add the newly created modal. 
+      // once the modal provider is provided with the new modal component, then depending on the use case we will add the modal opening to that specific area.
+      // in each onClick we will add onOpen and as arguments we will pass modal name and the data .
       return (
 
             <DropdownMenu>
@@ -83,7 +86,9 @@ export const HubHeader = ({
                         }
                         {
                               isAdmin && (
-                                    <DropdownMenuItem className="text-rose-600 px-3 py-2 text-sm cursor-pointer">
+                                    <DropdownMenuItem className="text-rose-600 px-3 py-2 text-sm cursor-pointer"
+                                    onClick={()=>onOpen("deleteServer", {server})}
+                                    >
                                           Delete HUB
                                           <Trash2Icon className='h-4 w-5 ml-auto' />
                                     </DropdownMenuItem>
@@ -92,7 +97,10 @@ export const HubHeader = ({
                         {/* admins cannot leave the server, omly moderator and guest users can */}
                         {
                               !isAdmin && (
-                                    <DropdownMenuItem className="text-rose-600 px-3 py-2 text-sm cursor-pointer">
+                                    <DropdownMenuItem className="text-rose-600 px-3 py-2 text-sm cursor-pointer"
+                                    onClick={()=>onOpen('leaveServer', {server})} 
+                                    // server is passed.
+                                    >
                                           Leave The Hub
                                           <LogOutIcon className='h-4 w-5 ml-auto' />
                                     </DropdownMenuItem>

@@ -173,4 +173,6 @@ html,body,:root{
   animation: breathe 2s infinite;
   transform: scale(1.05); /* Adjust the scale factor as needed */
 }
-
+.cl-userButtonPopoverFooter{
+  display: none;
+}
