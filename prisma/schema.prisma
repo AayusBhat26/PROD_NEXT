@@ -11,6 +11,8 @@ enum ChannelType {
   AUDIO
   VIDEO
   TASK
+  CODE
+  DRAWING
 }
 
 generator client {
