@@ -7,6 +7,14 @@ html,body,:root{
   width:100%;
 }
 @layer base {
+   .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+     /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+    }
   :root {
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;

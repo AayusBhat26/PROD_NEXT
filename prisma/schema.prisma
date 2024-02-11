@@ -13,6 +13,7 @@ enum ChannelType {
   TASK
   CODE
   DRAWING
+  pomofocus
 }
 
 generator client {
