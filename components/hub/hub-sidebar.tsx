@@ -6,6 +6,9 @@ import { HubHeader } from "./hub-header";
 import { ScrollArea } from "../ui/scroll-area";
 import { HubSearch } from "./hub-search";
 import { AudioLines, Code2, ListTodo, MicIcon, PenTool, ShieldAlertIcon, ShieldCheckIcon, Text, Timer, Video, VideoIcon } from "lucide-react";
+import { Separator } from "../ui/separator";
+import { SubHubSection } from "./sub-hub-section";
+import { SubHub } from "./Sub-Hub";
 // icon mappings
 const iconMapping = {
       [ChannelType.TEXT]: <Text className="mr-2 h-4 w-4" />,
@@ -146,12 +149,29 @@ export const HubSidebar = async ({
                                                 data: members?.map((member) => ({
                                                       id: member?.id,
                                                       name: member?.profile?.name,
-                                                      icon: roleIconMap[member.role]
+                                                      icon: roleIconMap[member?.role]
                                                 }))
                                           },
                                     ]}
                               />
                         </div>
+                        <Separator className="bg-blue-500 dark:bg-purple-600 rounded-md my-2"/>
+                        {!!textChannels?.length && <div className="mb-2">
+                              <SubHubSection
+                              sectionType="channels"
+                              channelType={ChannelType.TEXT}
+                              role={role}
+                              label='Text Sub Hub'
+                              />
+                              {textChannels.map((channel)=>(
+                                    <SubHub 
+                                    key={channel.id}
+                                    channel={channel}
+                                    role={role}
+                                    server={server}
+                                    />
+                              ))}
+                              </div>} 
                   </ScrollArea>
             </div>
       )
