@@ -9,20 +9,22 @@ import { AudioLines, Code2, ListTodo, MicIcon, PenTool, ShieldAlertIcon, ShieldC
 import { Separator } from "../ui/separator";
 import { SubHubSection } from "./sub-hub-section";
 import { SubHub } from "./Sub-Hub";
+import { useState } from "react";
+import { Collapse } from "../ui/collapse";
 // icon mappings
 const iconMapping = {
-      [ChannelType.TEXT]: <Text className="mr-2 h-4 w-4" />,
-      [ChannelType.AUDIO]: <MicIcon className="mr-2 h-4 w-4" />,
-      [ChannelType.VIDEO]: <VideoIcon className="mr-2 h-4 w-4" />,
-      [ChannelType.CODE]: <Code2 className="mr-2 h-4 w-4" />,
-      [ChannelType.DRAWING]: <PenTool className="mr-2 h-4 w-4" />,
-      [ChannelType.TASK]: <ListTodo className="mr-2 h-4 w-4" />,
-      [ChannelType.pomofocus]: <Timer className="mr-2 h-4 w-4" />,
+      [ChannelType.TEXT]: <Text className="w-4 h-4 mr-2" />,
+      [ChannelType.AUDIO]: <MicIcon className="w-4 h-4 mr-2" />,
+      [ChannelType.VIDEO]: <VideoIcon className="w-4 h-4 mr-2" />,
+      [ChannelType.CODE]: <Code2 className="w-4 h-4 mr-2" />,
+      [ChannelType.DRAWING]: <PenTool className="w-4 h-4 mr-2" />,
+      [ChannelType.TASK]: <ListTodo className="w-4 h-4 mr-2" />,
+      [ChannelType.pomofocus]: <Timer className="w-4 h-4 mr-2" />,
 };
 const roleIconMap = {
       [MemberRole.GUEST]: null,
-      [MemberRole.MODERATOR]: <ShieldCheckIcon className="h-4 w-4 mr-2 text-purple-500" />,
-      [MemberRole.ADMIN]: <ShieldAlertIcon className="h-4 w-4 mr-2 text-purple-500" />,
+      [MemberRole.MODERATOR]: <ShieldCheckIcon className="w-4 h-4 mr-2 text-purple-500" />,
+      [MemberRole.ADMIN]: <ShieldAlertIcon className="w-4 h-4 mr-2 text-purple-500" />,
 
 };
 
@@ -34,6 +36,7 @@ interface HubSidebarProps {
 export const HubSidebar = async ({
       hubId
 }: HubSidebarProps) => {
+      
       const profile = await currentProfile();
       if (!profile) return redirect('/');
 
@@ -155,23 +158,137 @@ export const HubSidebar = async ({
                                     ]}
                               />
                         </div>
-                        <Separator className="bg-blue-500 dark:bg-purple-600 rounded-md my-2"/>
+                        <Separator className="my-2 bg-blue-500 rounded-md dark:bg-purple-600"/>
                         {!!textChannels?.length && <div className="mb-2">
+                              {
+                                    <div className="">
+                                    
+                                          <SubHubSection
+                                                sectionType="channels"
+                                                channelType={ChannelType.TEXT}
+                                                role={role}
+                                                label="Text Sub Hub"
+                                          />
+                                          
+                                          {textChannels.map((channel) => (
+                                                <SubHub
+                                                      key={channel.id}
+                                                      channel={channel}
+                                                      role={role}
+                                                      server={server}
+                                                      
+                                                />
+                                          ))}
+                                    </div>
+                              }
+                              </div>
+                        }     
+
+                        {/* {!!audioChannels?.length && <div className="mb-2">
                               <SubHubSection
-                              sectionType="channels"
-                              channelType={ChannelType.TEXT}
-                              role={role}
-                              label='Text Sub Hub'
-                              />
-                              {textChannels.map((channel)=>(
-                                    <SubHub 
-                                    key={channel.id}
-                                    channel={channel}
+                                    sectionType="channels"
+                                    channelType={ChannelType.AUDIO}
                                     role={role}
-                                    server={server}
+                                    label='Voice Sub Hub'
+                              />
+                              {audioChannels.map((channel) => (
+                                    <SubHub
+                                          key={channel.id}
+                                          channel={channel}
+                                          role={role}
+                                          server={server}
                                     />
                               ))}
-                              </div>} 
+                        </div>
+                        }
+
+                        {!!videoChannels?.length && <div className="mb-2">
+                              <SubHubSection
+                                    sectionType="channels"
+                                    channelType={ChannelType.VIDEO}
+                                    role={role}
+                                    label='Voice Sub Hub'
+                              />
+                              {videoChannels.map((channel) => (
+                                    <SubHub
+                                          key={channel.id}
+                                          channel={channel}
+                                          role={role}
+                                          server={server}
+                                    />
+                              ))}
+                        </div>
+                        }
+                        {!!pomodoroChannels?.length && <div className="mb-2">
+                              <SubHubSection
+                                    sectionType="channels"
+                                    channelType={ChannelType.pomofocus}
+                                    role={role}
+                                    label='Pomodoro Sub Hub'
+                              />
+                              {pomodoroChannels.map((channel) => (
+                                    <SubHub
+                                          key={channel.id}
+                                          channel={channel}
+                                          role={role}
+                                          server={server}
+                                    />
+                              ))}
+                        </div>
+                        }
+                        {!!taskChannels?.length && <div className="mb-2">
+                              <SubHubSection
+                                    sectionType="channels"
+                                    channelType={ChannelType.TASK}
+                                    role={role}
+                                    label='Tasks Sub Hub'
+                              />
+                              {taskChannels.map((channel) => (
+                                    <SubHub
+                                          key={channel.id}
+                                          channel={channel}
+                                          role={role}
+                                          server={server}
+                                    />
+                              ))}
+                        </div>
+                        }
+                        {!!drawingChannels?.length && <div className="mb-2">
+                              <SubHubSection
+                                    sectionType="channels"
+                                    channelType={ChannelType.DRAWING}
+                                    role={role}
+                                    label='Drawing Sub Hub'
+                              />
+                              {drawingChannels.map((channel) => (
+                                    <SubHub
+                                          key={channel.id}
+                                          channel={channel}
+                                          role={role}
+                                          server={server}
+                                    />
+                              ))}
+                        </div>
+                        }
+                        {!!codeChannels?.length && <div className="mb-2">
+                              <SubHubSection
+                                    sectionType="channels"
+                                    channelType={ChannelType.CODE}
+                                    role={role}
+                                    label='Code Sub Hub'
+                              />
+                              {codeChannels.map((channel) => (
+                                    <SubHub
+                                          key={channel.id}
+                                          channel={channel}
+                                          role={role}
+                                          server={server}
+                                    />
+                              ))}
+                        </div>
+                        } */}
+
+                              
                   </ScrollArea>
             </div>
       )

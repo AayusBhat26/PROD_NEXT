@@ -90,10 +90,10 @@ export const CreateChannelModal = () => {
     onClose();
   }
   return (
-    <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="bg-white text-black p-0 overflow-hidden">
-        <DialogHeader className="pt-8 px-6">
-          <DialogTitle className="text-2xl text-center font-bold">
+    <Dialog open={isModalOpen} onOpenChange={handleClose} >
+      <DialogContent className="p-0 overflow-hidden text-white dark:bg-[#161618]">
+        <DialogHeader className="px-6 pt-8">
+          <DialogTitle className="text-2xl font-bold text-center ">
             CREATE A SUB HUB
           </DialogTitle>
         </DialogHeader>
@@ -103,34 +103,34 @@ export const CreateChannelModal = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8 text-xs"
           >
-            <div className="space-y-8 px-6">
+            <div className="px-6 space-y-8">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="uppercase text-xs font-bold text-blue-500 dark:text-secondary/60">
+                    <FormLabel className="text-xs font-bold text-blue-500 uppercase dark:text-white">
                       SUB-HUB NAME
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
-                        className="bg-zinc-300/40 border-0 focus-visible:ring-1 text-black focus-visible:ring-offset-0"
+                        className="font-bold text-white bg-purple-900 border-0 focus-visible:ring-1 focus-visible:ring-offset-0"
                         placeholder="Enter the SUB-HUB Name."
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-blue-300 font-bold text-xs" />
+                    <FormMessage className="text-xs font-bold text-blue-300" />
                   </FormItem>
                 )}
               />
               <FormField control={form.control} name="type" render={({field})=>(<FormItem>
                 <FormLabel>Sub Hub Type</FormLabel>
-                <Select disabled={isLoading} onValueChange={field.onChange}  defaultValue={field.value}
+                <Select  disabled={isLoading} onValueChange={field.onChange}   defaultValue={field.value}
                 >
                   <FormControl>
                     <SelectTrigger 
-                    className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:rignt-offset-0 capitalize outline-none"
+                      className="font-bold text-white capitalize bg-purple-900 border-0 outline-none focus:ring-0 ring-offset-0 focus:rignt-offset-0"
                     >
                       <SelectValue placeholder="Select A Sub Hub Type." />
                     </SelectTrigger>
@@ -149,13 +149,13 @@ export const CreateChannelModal = () => {
               </FormItem>)}
               />
             </div>
-            <DialogFooter className="bg-gray-100 px-6 py-4">
+            <DialogFooter className=" px-6 py-4 bg-[#161618] ">
               <Button
-                className="text-xs"
+                className="p-[24px] text-xs"
                 variant={"initial"}
                 disabled={isLoading}
               >
-                Create
+                GO
               </Button>
             </DialogFooter>
           </form>
