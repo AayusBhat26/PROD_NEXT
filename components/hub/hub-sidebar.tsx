@@ -10,7 +10,18 @@ import { Separator } from "../ui/separator";
 import { SubHubSection } from "./sub-hub-section";
 import { SubHub } from "./Sub-Hub";
 import { useState } from "react";
-import { Collapse } from "../ui/collapse";
+import {
+      NavigationMenu,
+      NavigationMenuContent,
+      NavigationMenuIndicator,
+      NavigationMenuItem,
+      NavigationMenuLink,
+      NavigationMenuList,
+      NavigationMenuTrigger,
+      NavigationMenuViewport,
+} from "@/components/ui/navigation-menu"
+import { SubHubMember } from "./Sub-Hub-Members";
+
 // icon mappings
 const iconMapping = {
       [ChannelType.TEXT]: <Text className="w-4 h-4 mr-2" />,
@@ -36,7 +47,7 @@ interface HubSidebarProps {
 export const HubSidebar = async ({
       hubId
 }: HubSidebarProps) => {
-      
+
       const profile = await currentProfile();
       if (!profile) return redirect('/');
 
@@ -88,7 +99,7 @@ export const HubSidebar = async ({
                                           // 1. text channel
                                           {
                                                 label: 'Text Channels',
-                                                type: 'Channel',
+                                                type: 'channel',
                                                 data: textChannels?.map((channel) => ({
                                                       id: channel.id,
                                                       name: channel.name,
@@ -158,47 +169,50 @@ export const HubSidebar = async ({
                                     ]}
                               />
                         </div>
-                        <Separator className="my-2 bg-blue-500 rounded-md dark:bg-purple-600"/>
+                        <Separator className="my-2 bg-blue-500 rounded-md dark:bg-purple-600" />
                         {!!textChannels?.length && <div className="mb-2">
                               {
                                     <div className="">
-                                    
+
                                           <SubHubSection
                                                 sectionType="channels"
                                                 channelType={ChannelType.TEXT}
                                                 role={role}
                                                 label="Text Sub Hub"
                                           />
-                                          
-                                          {textChannels.map((channel) => (
-                                                <SubHub
-                                                      key={channel.id}
-                                                      channel={channel}
-                                                      role={role}
-                                                      server={server}
-                                                      
-                                                />
-                                          ))}
+                                          <div className="space-y-[2px]">
+                                                {textChannels.map((channel) => (
+                                                      <SubHub
+                                                            key={channel.id}
+                                                            channel={channel}
+                                                            role={role}
+                                                            server={server}
+
+                                                      />
+                                                ))}
+                                          </div>
                                     </div>
                               }
-                              </div>
-                        }     
+                        </div>
+                        }
 
-                        {/* {!!audioChannels?.length && <div className="mb-2">
+                        {!!audioChannels?.length && <div className="mb-2">
                               <SubHubSection
                                     sectionType="channels"
                                     channelType={ChannelType.AUDIO}
                                     role={role}
                                     label='Voice Sub Hub'
                               />
-                              {audioChannels.map((channel) => (
-                                    <SubHub
-                                          key={channel.id}
-                                          channel={channel}
-                                          role={role}
-                                          server={server}
-                                    />
-                              ))}
+                              <div className="space-y-[2px]">
+                                    {audioChannels.map((channel) => (
+                                          <SubHub
+                                                key={channel.id}
+                                                channel={channel}
+                                                role={role}
+                                                server={server}
+                                          />
+                                    ))}
+                              </div>
                         </div>
                         }
 
@@ -209,14 +223,16 @@ export const HubSidebar = async ({
                                     role={role}
                                     label='Voice Sub Hub'
                               />
-                              {videoChannels.map((channel) => (
-                                    <SubHub
-                                          key={channel.id}
-                                          channel={channel}
-                                          role={role}
-                                          server={server}
-                                    />
-                              ))}
+                              <div className="space-y-[2px]">
+                                    {videoChannels.map((channel) => (
+                                          <SubHub
+                                                key={channel.id}
+                                                channel={channel}
+                                                role={role}
+                                                server={server}
+                                          />
+                                    ))}
+                              </div>
                         </div>
                         }
                         {!!pomodoroChannels?.length && <div className="mb-2">
@@ -226,14 +242,16 @@ export const HubSidebar = async ({
                                     role={role}
                                     label='Pomodoro Sub Hub'
                               />
-                              {pomodoroChannels.map((channel) => (
-                                    <SubHub
-                                          key={channel.id}
-                                          channel={channel}
-                                          role={role}
-                                          server={server}
-                                    />
-                              ))}
+                              <div className="space-y-[2px]">
+                                    {pomodoroChannels.map((channel) => (
+                                          <SubHub
+                                                key={channel.id}
+                                                channel={channel}
+                                                role={role}
+                                                server={server}
+                                          />
+                                    ))}
+                              </div>
                         </div>
                         }
                         {!!taskChannels?.length && <div className="mb-2">
@@ -253,23 +271,25 @@ export const HubSidebar = async ({
                               ))}
                         </div>
                         }
-                        {!!drawingChannels?.length && <div className="mb-2">
-                              <SubHubSection
-                                    sectionType="channels"
-                                    channelType={ChannelType.DRAWING}
-                                    role={role}
-                                    label='Drawing Sub Hub'
-                              />
-                              {drawingChannels.map((channel) => (
-                                    <SubHub
-                                          key={channel.id}
-                                          channel={channel}
+                        <div className="space-y-[2px]">
+                              {!!drawingChannels?.length && <div className="mb-2">
+                                    <SubHubSection
+                                          sectionType="channels"
+                                          channelType={ChannelType.DRAWING}
                                           role={role}
-                                          server={server}
+                                          label='Drawing Sub Hub'
                                     />
-                              ))}
+                                    {drawingChannels.map((channel) => (
+                                          <SubHub
+                                                key={channel.id}
+                                                channel={channel}
+                                                role={role}
+                                                server={server}
+                                          />
+                                    ))}
+                              </div>
+                              }
                         </div>
-                        }
                         {!!codeChannels?.length && <div className="mb-2">
                               <SubHubSection
                                     sectionType="channels"
@@ -277,19 +297,33 @@ export const HubSidebar = async ({
                                     role={role}
                                     label='Code Sub Hub'
                               />
-                              {codeChannels.map((channel) => (
-                                    <SubHub
-                                          key={channel.id}
-                                          channel={channel}
-                                          role={role}
-                                          server={server}
-                                    />
+                              <div className="space-y-[2px]">
+                                    {codeChannels.map((channel) => (
+                                          <SubHub
+                                                key={channel.id}
+                                                channel={channel}
+                                                role={role}
+                                                server={server}
+                                          />
+                                    ))}
+                              </div>
+                        </div>
+
+                        }
+                        {!!members?.length && <div className="mb-2">
+                              <SubHubSection
+                                    sectionType="members"
+                                    role={role}
+                                    label='Members'
+                                    server={server}
+                              />
+                              {members.map((member) => (
+                                    <SubHubMember />
                               ))}
                         </div>
-                        } */}
-
-                              
+                        }
                   </ScrollArea>
+
             </div>
       )
 }

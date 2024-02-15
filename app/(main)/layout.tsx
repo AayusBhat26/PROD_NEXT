@@ -11,7 +11,7 @@ const MainLayout = async ({children}:{
                   {/* right-0 inset-y-0*/}
                   <TaskbarNavigation />
             </div>
-            <main className=" h-full">
+            <main className="inset-y-0 right-0 ">
                   {children}
             </main>
            

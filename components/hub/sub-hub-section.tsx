@@ -21,21 +21,21 @@ export const SubHubSection = ({
       const { onOpen } = useModal();
       return (
             <div className="flex items-center justify-between py-2">
-                  <p className="text-xs uppercase font-semibold text-blue-700 dark:text-blue-500">
+                  <p className="text-xs font-semibold text-blue-700 uppercase dark:text-blue-500">
                         {label}
                   </p>
                   {role !== MemberRole.GUEST && sectionType === "channels" && (
                         <ActionTooltip label="Create Sub Hub" side="top">
-                              <button className="dark:hover:text-blue-500 transition hover:bg-gray-800" onClick={() => onOpen("createChannel")}>
-                                    <PlusCircleIcon className="h-4 w-4" />
+                              <button className="transition dark:hover:text-blue-500 hover:bg-gray-800" onClick={() => onOpen("createChannel")}>
+                                    <PlusCircleIcon className="w-4 h-4" />
                               </button>
                         </ActionTooltip>
                   )}
                   {
                         role === MemberRole.ADMIN && sectionType === "members" && (
-                              <ActionTooltip label="Create Sub Hub" side="top">
-                                    <button className="dark:hover:text-blue-500 transition hover:bg-gray-800" onClick={() => onOpen("members", { server })}>
-                                          <Settings2Icon className="h-4 w-4" />
+                              <ActionTooltip label="Manage Members" side="top">
+                                    <button className="transition dark:hover:text-blue-500 hover:bg-gray-800" onClick={() => onOpen("members", { server })}>
+                                          <Settings2Icon className="w-4 h-4" />
                                     </button>
                               </ActionTooltip>
                         )
