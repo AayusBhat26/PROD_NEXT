@@ -5,8 +5,9 @@ import { Channel, MemberRole, Server, ChannelType } from "@prisma/client";
 import { Code, Ear, Edit, ListTodo, Lock, Mic, Pen, PenTool, PlusCircleIcon, Settings2Icon, Text, Timer, Trash, Video } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { ActionTooltip } from "../actions-tooltip";
+import { useModal } from "../hooks/use-modal-store";
 
-interface SubHubProps{
+interface SubHubProps {
       channel: Channel;
       server: Server;
       role?: MemberRole;
@@ -21,11 +22,12 @@ const iconMap = {
       [ChannelType.TASK]: ListTodo,
 
 }
-export const SubHub = ({channel , server, role}:SubHubProps)=>{
+export const SubHub = ({ channel, server, role }: SubHubProps) => {
+      const { onOpen } = useModal();
       const params = useParams();
       const router = useRouter();
       const Icon = iconMap[channel.type];
-      const onClick =()=>{
+      const onClick = () => {
 
       }
       return (
@@ -41,7 +43,7 @@ export const SubHub = ({channel , server, role}:SubHubProps)=>{
                         "line-clamp-1 font-semibold text-sm text-purple-500 group-hover:text-purple-600 dark:text-purple-400 dark:group-hover:text-purple-300 transition",
                         params?.channelId === channel.id && "text-primary dark:text-purple-200 dark:group-hover:text-white"
                   )}>
-                        
+
                         {channel.name}
                   </p>
                   {channel.name !== "general" && role !== MemberRole.GUEST && (
@@ -54,7 +56,7 @@ export const SubHub = ({channel , server, role}:SubHubProps)=>{
                               </ActionTooltip>
                               <ActionTooltip label="Delete">
                                     <Trash
-                                          // onClick={(e) => onAction(e, "deleteChannel")}
+                                          onClick={() => onOpen("deleteChannel", { server, channel })}
                                           className="hidden w-4 h-4 text-purple-500 transition group-hover:block hover:text-purple-600 dark:text-purple-400 dark:hover:text-purple-300"
                                     />
                               </ActionTooltip>
@@ -66,7 +68,7 @@ export const SubHub = ({channel , server, role}:SubHubProps)=>{
                                     className="w-4 h-4 ml-auto text-purple-500 dark:text-purple-400"
                               />
                         </ActionTooltip>
-                     
+
                   )}
             </button>
       )

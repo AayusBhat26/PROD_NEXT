@@ -31,44 +31,51 @@ import { Button } from "../ui/button";
 import { useModal } from "../hooks/use-modal-store";
 import {
   Select,
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
+import { useEffect } from "react";
 // todo: form schema
 const formSchema = z.object({
   name: z.string().min(1, {
     message: "SUB HUB name is required.",
     // preventing the subname as the general name
-  }).refine(name => name !== "Common Chat" , {
-    message:"Sub Hub name cannot be 'Common Chat '"
+  }).refine(name => name !== "Common Chat", {
+    message: "Sub Hub name cannot be 'Common Chat '"
   }),
   type: z.nativeEnum(ChannelType)
 });
 export const CreateChannelModal = () => {
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
   const params = useParams();
 
   const isModalOpen = isOpen && type === "createChannel";
+  const { channelType } = data;
 
-  // todo: form
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "", 
-      // default type of sub hub is text.
-      type:ChannelType.TEXT,
-    },
+      name: "",
+      type: channelType || ChannelType.TEXT,
+    }
   });
 
+  useEffect(() => {
+    if (channelType) {
+      form.setValue("type", channelType);
+    } else {
+      form.setValue("type", ChannelType.TEXT);
+    }
+  }, [channelType, form]);
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       console.log(params);
-      
+
       const url = qs.stringifyUrl({
         url: "/api/channels",
         query: {
@@ -124,19 +131,19 @@ export const CreateChannelModal = () => {
                   </FormItem>
                 )}
               />
-              <FormField control={form.control} name="type" render={({field})=>(<FormItem>
+              <FormField control={form.control} name="type" render={({ field }) => (<FormItem>
                 <FormLabel>Sub Hub Type</FormLabel>
-                <Select  disabled={isLoading} onValueChange={field.onChange}   defaultValue={field.value}
+                <Select disabled={isLoading} onValueChange={field.onChange} defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger 
+                    <SelectTrigger
                       className="font-bold text-white capitalize bg-purple-900 border-0 outline-none focus:ring-0 ring-offset-0 focus:rignt-offset-0"
                     >
                       <SelectValue placeholder="Select A Sub Hub Type." />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {Object.values(ChannelType).map((type)=>(
+                    {Object.values(ChannelType).map((type) => (
                       <SelectItem key={type} value={type} className="capitalize">
                         {
                           type.toLowerCase()
@@ -145,7 +152,7 @@ export const CreateChannelModal = () => {
                     ))}
                   </SelectContent>
                 </Select>
-                <FormMessage/>
+                <FormMessage />
               </FormItem>)}
               />
             </div>

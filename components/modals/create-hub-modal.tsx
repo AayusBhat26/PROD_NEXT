@@ -41,11 +41,11 @@ const formSchema = z.object({
   }),
 });
 export const CreateHubModal = () => {
-  const {isOpen, onClose, type}= useModal();
+  const { isOpen, onClose, type } = useModal();
   const router = useRouter();
 
 
-  const isModalOpen = isOpen && type==="createServer";
+  const isModalOpen = isOpen && type === "createServer";
 
   // todo: form
   const form = useForm({
@@ -68,31 +68,32 @@ export const CreateHubModal = () => {
       onClose();
     } catch (error) {
       console.log(error);
-      
+
     }
   };
-  const handleClose = ()=>{
+  const handleClose = () => {
     form.reset();
     onClose();
   }
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="bg-white text-black p-0 overflow-hidden">
-        <DialogHeader className="pt-8 px-6">
-          <DialogTitle className="text-2xl text-center font-bold">
+      <DialogContent className="p-0 overflow-hidden text-black bg-white">
+        <Dialog
+          className="px-6 pt-8">
+          <DialogTitle className="text-2xl font-bold text-center">
             CREATE A HUB
           </DialogTitle>
           <DialogDescription className="text-center text-blue-300">
             Provide your HUB a personality make over.
           </DialogDescription>
-        </DialogHeader>
+        </Dialog>
         <Form {...form}>
           <form
             suppressHydrationWarning
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8 text-xs"
           >
-            <div className="space-y-8 px-6">
+            <div className="px-6 space-y-8">
               <div className="flex items-center justify-center text-center">
                 {/* todo: image uploading, cloudnariy. */}
                 <FormField
@@ -116,23 +117,23 @@ export const CreateHubModal = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="uppercase text-xs font-bold text-blue-500 dark:text-secondary/60">
+                    <FormLabel className="text-xs font-bold text-blue-500 uppercase dark:text-secondary/60">
                       HUB NAME
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
-                        className="bg-zinc-300/40 border-0 focus-visible:ring-1 text-black focus-visible:ring-offset-0"
+                        className="text-black border-0 bg-zinc-300/40 focus-visible:ring-1 focus-visible:ring-offset-0"
                         placeholder="Enter the HUB Name."
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-blue-300 font-bold text-xs" />
+                    <FormMessage className="text-xs font-bold text-blue-300" />
                   </FormItem>
                 )}
               />
             </div>
-            <DialogFooter className="bg-gray-100 px-6 py-4">
+            <DialogFooter className="px-6 py-4 bg-gray-100">
               <Button
                 className="text-xs"
                 variant={"initial"}

@@ -17,7 +17,7 @@ interface SubHubSectionProps {
 export const SubHubSection = ({
       label, role, sectionType, channelType, server
 }: SubHubSectionProps) => {
-      
+
       const { onOpen } = useModal();
       return (
             <div className="flex items-center justify-between py-2">
@@ -26,7 +26,7 @@ export const SubHubSection = ({
                   </p>
                   {role !== MemberRole.GUEST && sectionType === "channels" && (
                         <ActionTooltip label="Create Sub Hub" side="top">
-                              <button className="transition dark:hover:text-blue-500 hover:bg-gray-800" onClick={() => onOpen("createChannel")}>
+                              <button className="transition dark:hover:text-blue-500 hover:bg-gray-800" onClick={() => onOpen("createChannel", { channelType })}>
                                     <PlusCircleIcon className="w-4 h-4" />
                               </button>
                         </ActionTooltip>

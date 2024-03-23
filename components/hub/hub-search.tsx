@@ -23,7 +23,6 @@ export const HubSearch = ({
       const [open, setOpen] = useState(false);
       const router = useRouter();
       const params = useParams();
-
       useEffect(() => {
             const down = (e: KeyboardEvent) => {
                   if (e.key === 'b' && (e.metaKey || e.ctrlKey)) {
@@ -47,9 +46,9 @@ export const HubSearch = ({
       return (
             <>
                   <button onClick={() => setOpen(true)}
-                        className="group px-2 py-2 rounded-md flex items-center gap-x-2 w-full hover:bg-purple-500 dark:hover:bg-blue-500/10 transition">
+                        className="flex items-center w-full px-2 py-2 transition rounded-md group gap-x-2 hover:bg-purple-500 dark:hover:bg-blue-500/10">
                         <SearchIcon className="w-4 h-4 text-blue-400 dark:text-blue-500" />
-                        <p className="font-semibold text-sm text-blue-400 dark:text-blue-500 group-hover:text-blue-500 dark:group-hover:text-white transition hover:border-purple-500">
+                        <p className="text-sm font-semibold text-blue-400 transition dark:text-blue-500 group-hover:text-blue-500 dark:group-hover:text-white hover:border-purple-500">
                               searching
                         </p>
                         <kbd
@@ -65,7 +64,7 @@ export const HubSearch = ({
                                     placeholder="Search all Hubs or memebrs from here."
                               />
                               {/* {className = "border border-[1px] border-purple-500"} */}
-                              <CommandList className="overflow-y-scroll no-scrollbar  border  border-purple-300 rounded ">
+                              <CommandList className="overflow-y-scroll border border-purple-300 rounded no-scrollbar ">
                                     <CommandEmpty>
                                           No results found.
                                     </CommandEmpty>
