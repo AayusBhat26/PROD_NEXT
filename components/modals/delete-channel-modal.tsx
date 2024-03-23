@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
 import {
   Dialog,
@@ -18,7 +18,7 @@ import { Button } from "../ui/button";
 export const DeleteChannelModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
-
+  // const params = useParams();
   const isModalOpen = isOpen && type === "deleteChannel";
   const { server, channel } = data;
 
@@ -33,12 +33,12 @@ export const DeleteChannelModal = () => {
           serverId: server?.id,
         }
       })
-
       await axios.delete(url);
-
       onClose();
+
+      console.log(server);
+      router.push(`/hubs/${server?.id}`)
       router.refresh();
-      router.push(`/hubs/${server?.id}`);
     } catch (error) {
       console.log(error);
     } finally {
