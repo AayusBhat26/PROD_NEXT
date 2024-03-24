@@ -9,17 +9,6 @@ import { AudioLines, Code2, ListTodo, MicIcon, PenTool, ShieldAlertIcon, ShieldC
 import { Separator } from "../ui/separator";
 import { SubHubSection } from "./sub-hub-section";
 import { SubHub } from "./Sub-Hub";
-import { useState } from "react";
-import {
-      NavigationMenu,
-      NavigationMenuContent,
-      NavigationMenuIndicator,
-      NavigationMenuItem,
-      NavigationMenuLink,
-      NavigationMenuList,
-      NavigationMenuTrigger,
-      NavigationMenuViewport,
-} from "@/components/ui/navigation-menu"
 import { SubHubMember } from "./Sub-Hub-Members";
 
 // icon mappings
@@ -318,7 +307,11 @@ export const HubSidebar = async ({
                                     server={server}
                               />
                               {members.map((member) => (
-                                    <SubHubMember />
+                                    <SubHubMember
+                                          key={member.id}
+                                          member={member}
+                                          server={server}
+                                    />
                               ))}
                         </div>
                         }

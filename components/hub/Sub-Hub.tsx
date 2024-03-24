@@ -5,7 +5,7 @@ import { Channel, MemberRole, Server, ChannelType } from "@prisma/client";
 import { Code, Ear, Edit, ListTodo, Lock, Mic, Pen, PenTool, PlusCircleIcon, Settings2Icon, Text, Timer, Trash, Video } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { ActionTooltip } from "../actions-tooltip";
-import { useModal } from "../hooks/use-modal-store";
+import { ModalType, useModal } from "../hooks/use-modal-store";
 
 interface SubHubProps {
       channel: Channel;
@@ -27,8 +27,14 @@ export const SubHub = ({ channel, server, role }: SubHubProps) => {
       const params = useParams();
       const router = useRouter();
       const Icon = iconMap[channel.type];
+      // for navigatiion of user between chats.
       const onClick = () => {
-
+            router.push(`/hubs/${params?.hubsId}/channels/${channel.id}`)
+      }
+      // onAction is the alternative for onClick as it was overriding the edit onClick.
+      const onAction = (e: React.MouseEvent, action: ModalType) => {
+            e.stopPropagation();
+            onOpen(action, { channel, server })
       }
       return (
             <button
@@ -51,12 +57,13 @@ export const SubHub = ({ channel, server, role }: SubHubProps) => {
                               <ActionTooltip label="Edit">
                                     <Edit
                                           // onClick={(e) => onAction(e, "editChannel")}
+                                          onClick={(e) => onAction(e, 'editChannel')}
                                           className="hidden w-4 h-4 text-purple-500 transition group-hover:block hover:text-purple-600 dark:text-purple-400 dark:hover:text-purple-300"
                                     />
                               </ActionTooltip>
                               <ActionTooltip label="Delete">
                                     <Trash
-                                          onClick={() => onOpen("deleteChannel", { server, channel })}
+                                          onClick={(e) => onAction(e, "deleteChannel")}
                                           className="hidden w-4 h-4 text-purple-500 transition group-hover:block hover:text-purple-600 dark:text-purple-400 dark:hover:text-purple-300"
                                     />
                               </ActionTooltip>

@@ -81,7 +81,7 @@ export async function PATCH(
                 }
 
                 if (name === "general") {
-                        return new NextResponse("Name cannot be 'general'", { status: 400 });
+                        return new NextResponse("So you've reached here, sorry 'general' cannot have any modifications.", { status: 400 });
                 }
 
                 const server = await db.server.update({

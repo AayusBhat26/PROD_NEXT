@@ -29,7 +29,7 @@ datasource db {
 
 model Profile {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId   String  @unique 
+  userId   String  @unique
   name     String?
   imageUrl String?
   email    String  @unique
@@ -67,10 +67,14 @@ model Member {
   profileId String  @db.ObjectId
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
-  serverId  String   @db.ObjectId
-  server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  serverId               String          @db.ObjectId
+  server                 Server          @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @default(now())
+  messages               Message[]
+  directMessages         DirectMessage[]
+  conversationsInitiated Conversation[]  @relation("MemberOne")
+  conversationsReceived  Conversation[]  @relation("MemberTwo")
 
   @@index([profileId])
   @@index([serverId])
@@ -90,13 +94,67 @@ model Channel {
   serverId  String      @db.ObjectId
   server    Server      @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  messages  Message[]
 
   @@index([profileId])
   @@index([serverId])
 }
 
+// message modal for channels
+model Message {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  content  String  @db.String
+  iamgeUrl String? @db.String
+
+  memberId String @db.ObjectId
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  channelId String  @db.ObjectId
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  deleted   Boolean  @default(false) // for soft deleting.
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([channelId])
+  @@index([memberId])
+}
+
+// message modal for direct conversation.
+model Conversation {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  memberOneId String @db.ObjectId
+  memberOne   Member @relation("MemberOne", fields: [memberOneId], references: [id], onDelete: Cascade)
+
+  memberTwoId    String          @db.ObjectId
+  memberTwo      Member          @relation("MemberTwo", fields: [memberTwoId], references: [id], onDelete: Cascade)
+  directMessages DirectMessage[]
+
+  @@unique([memberOneId, memberTwoId])
+  @@index([memberOneId])
+  @@index([memberTwoId])
+}
+
+model DirectMessage {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  content String  @db.String
+  fileUrl String? @db.String
+
+  memberId String @db.ObjectId
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  conversationId String       @db.ObjectId
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  deleted   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([memberId])
+  @@index([conversationId])
+}
 
 // everytime we modify the schema.prisma file, we need to do this, 
 // 1. npx prisma generate 
