@@ -8,6 +8,8 @@ import { ScrollArea } from "../ui/scroll-area";
 import { NavigationItem } from "./Navigation-item";
 import { ModeToggle } from "../mode-toggle";
 import { Servers } from "@/lib/servers";
+import { Indicator } from "../indicator";
+
 const TaskbarNavigation = async () => {
       const profile = await currentProfile();
       if (!profile) return redirect('/');
@@ -45,6 +47,9 @@ const TaskbarNavigation = async () => {
                                     }
                               }}
                         />
+                  </div>
+                  <div className="flex items-center ml-auto ">
+                        <Indicator />
                   </div>
             </div>
       );

@@ -1,6 +1,7 @@
 import { Hash } from "lucide-react";
 import { MobileToggle } from "../toggle-mobile";
 import { UserAvatar } from "../user-avatar";
+import { Indicator } from "../indicator";
 interface ChatHeaderProps {
       hubsId: string;
       name: string;
@@ -18,6 +19,9 @@ export const ChatHeader = ({ hubsId, name, type, imageUrl }: ChatHeaderProps) =>
                         <UserAvatar src={imageUrl} className="w-8 h-8 mr-4 md:h-8 md:w-8" />
                   )}
                   <p className="font-semibold text-black text-md dark:text-white">{name}</p>
+                  {/* <div className="flex items-center ml-auto">
+                        <Indicator />
+                  </div> */}
             </div>
       )
 }

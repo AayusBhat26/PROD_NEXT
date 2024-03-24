@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/providers/themes-providers'
 import { cn } from '@/lib/utils'
 import { ModalProvider } from '@/components/providers/modal-providers'
 import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes';
+import { SocketProvider } from '@/components/providers/socket-providers'
 const inter = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -34,8 +35,10 @@ export default function RootLayout({
       <html lang="en" >
         <body className={cn(inter.className, "  bg-white dark:bg-[#161618]")} suppressHydrationWarning>
           <ThemeProvider attribute='class' defaultTheme='dark' enableSystem={false} storageKey='theme_prod'>
-            <ModalProvider/>
-            {children}
+            <SocketProvider >
+              <ModalProvider />
+              {children}
+            </SocketProvider >
           </ThemeProvider>
         </body>
       </html>
