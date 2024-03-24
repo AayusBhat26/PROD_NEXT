@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { ModalProvider } from '@/components/providers/modal-providers'
 import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes';
 import { SocketProvider } from '@/components/providers/socket-providers'
+import { QueryProvider } from '@/components/providers/query-providers'
 const inter = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -37,7 +38,9 @@ export default function RootLayout({
           <ThemeProvider attribute='class' defaultTheme='dark' enableSystem={false} storageKey='theme_prod'>
             <SocketProvider >
               <ModalProvider />
-              {children}
+              <QueryProvider>
+                {children}
+              </QueryProvider>
             </SocketProvider >
           </ThemeProvider>
         </body>
