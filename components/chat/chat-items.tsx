@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useModal } from "../hooks/use-modal-store";
 
 // form schema 
 const formSchema = z.object({
@@ -42,8 +43,7 @@ interface ChatItemsProps {
       socketQuery: Record<string, string>;
 }
 export const ChatItems = ({ id, content, member, timestamp, fileUrl, deleted, currentMember, isUpdated, socketUrl, socketQuery }: ChatItemsProps) => {
-
-
+      const { onOpen } = useModal();
 
       const form = useForm<z.infer<typeof formSchema>>({
             resolver: zodResolver(formSchema),
@@ -61,7 +61,6 @@ export const ChatItems = ({ id, content, member, timestamp, fileUrl, deleted, cu
 
 
       const [isEditing, setIsEditing] = useState(false);
-      const [isDeleting, setIsDeleting] = useState(false);
       // mai js ka concept bhul gya tha ki const wale vairables ki hosting nhi hoti hai, isliye ye keydown chal nhi rha tha.
       useEffect(() => {
             const handleKeyDown = (event: any) => {
@@ -87,12 +86,15 @@ export const ChatItems = ({ id, content, member, timestamp, fileUrl, deleted, cu
       const isLoading = form.formState.isSubmitting;
       const onSubmit = async (values: z.infer<typeof formSchema>) => {
             // console.log(values);
+
             try {
                   const url = qs.stringifyUrl({
                         url: `${socketUrl}/${id}`,
                         query: socketQuery
                   });
                   await axios.patch(url, values);
+                  form.reset()
+                  setIsEditing(false);
             } catch (error) {
                   console.log(error);
             }
@@ -142,8 +144,8 @@ export const ChatItems = ({ id, content, member, timestamp, fileUrl, deleted, cu
                                           {content}
                                           {
                                                 isUpdated && !deleted && (
-                                                      <span className="text-[6px] text-zinc-600 mx-2">
-                                                            (edited)
+                                                      <span className="mx-2 text-zinc-600">
+                                                            <span className="font-extrabold font-[20px] mr-[10px]">*Note: </span>message is different from original message
                                                       </span>
                                                 )
                                           }
@@ -198,7 +200,11 @@ export const ChatItems = ({ id, content, member, timestamp, fileUrl, deleted, cu
                                           </ActionTooltip>
                                     )}
                                     <ActionTooltip label="Delete">
-                                          <Trash2 className="w-4 h-4 ml-auto transition cursor-pointer text-zinc-600 hover:text-zinc-900" />
+                                          <Trash2 className="w-4 h-4 ml-auto transition cursor-pointer text-zinc-600 hover:text-zinc-900" onClick={() => onOpen("deleteMessage", {
+                                                apiUrl: `${socketUrl}/${id}`,
+                                                query: socketQuery
+
+                                          })} />
                                     </ActionTooltip>
                               </div>
                         )
