@@ -1,11 +1,26 @@
 'use client';
-
+import {
+      Form, FormControl, FormField, FormItem
+} from "@/components/ui/form";
+import * as z from "zod";
+import axios from "axios"
+import qs from "query-string";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Member, Profile, MemberRole } from "@prisma/client";
 import { UserAvatar } from "../user-avatar";
 import { ActionTooltip } from "../actions-tooltip";
-import { FileIcon, ShieldAlert, ShieldCheck } from "lucide-react";
+import { Edit, Edit2, FileIcon, ShieldAlert, ShieldCheck, Trash2 } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
+// form schema 
+const formSchema = z.object({
+      content: z.string().min(1)
+})
 
 const roleIconMap = {
       "GUEST": null,
@@ -27,6 +42,40 @@ interface ChatItemsProps {
       socketQuery: Record<string, string>;
 }
 export const ChatItems = ({ id, content, member, timestamp, fileUrl, deleted, currentMember, isUpdated, socketUrl, socketQuery }: ChatItemsProps) => {
+
+
+
+      const form = useForm<z.infer<typeof formSchema>>({
+            resolver: zodResolver(formSchema),
+            defaultValues: {
+                  content: content,
+            }
+      })
+      useEffect(() => {
+            // i forgot to add the content as the dependency, becauuse of that whenever i was editing the messagee, the edited message was not updated in the frontend only.
+            form.reset({
+                  content: content,
+            })
+      }, [content]);
+
+
+
+      const [isEditing, setIsEditing] = useState(false);
+      const [isDeleting, setIsDeleting] = useState(false);
+      // mai js ka concept bhul gya tha ki const wale vairables ki hosting nhi hoti hai, isliye ye keydown chal nhi rha tha.
+      useEffect(() => {
+            const handleKeyDown = (event: any) => {
+                  if (event.key === 'Escape' || event.keyCode === 27) {
+                        setIsEditing(false);
+                  }
+            };
+
+            window.addEventListener('keydown', handleKeyDown);
+
+            return () => {
+                  window.removeEventListener('keydown', handleKeyDown);
+            };
+      }, []);
       const fileType = fileUrl?.split('.').pop();
       const isAdmin = currentMember.role === MemberRole.ADMIN;
       const isModerator = currentMember.role === MemberRole.MODERATOR;
@@ -35,6 +84,20 @@ export const ChatItems = ({ id, content, member, timestamp, fileUrl, deleted, cu
       const editMessage = !deleted && (isOwner) && !fileUrl
       const isPDF = fileType === 'pdf' && fileUrl;
       const isImage = !isPDF && fileUrl;
+      const isLoading = form.formState.isSubmitting;
+      const onSubmit = async (values: z.infer<typeof formSchema>) => {
+            // console.log(values);
+            try {
+                  const url = qs.stringifyUrl({
+                        url: `${socketUrl}/${id}`,
+                        query: socketQuery
+                  });
+                  await axios.patch(url, values);
+            } catch (error) {
+                  console.log(error);
+            }
+
+      }
 
       return (
             <div className="relative flex w-full p-4 transition group itens-center hover:bg-black/5">
@@ -71,8 +134,75 @@ export const ChatItems = ({ id, content, member, timestamp, fileUrl, deleted, cu
                                           </div>
                                     )
                               }
+                              {!fileUrl && !isEditing && (
+                                    <p className={cn(
+                                          "text-sm text-zinc-500 dark:text-zinc-200",
+                                          deleted && "italic text-black dark:text-white text-xs mt-1"
+                                    )} >
+                                          {content}
+                                          {
+                                                isUpdated && !deleted && (
+                                                      <span className="text-[6px] text-zinc-600 mx-2">
+                                                            (edited)
+                                                      </span>
+                                                )
+                                          }
+                                    </p>
+                              )}
+                              {
+                                    !fileUrl && isEditing && (
+                                          <Form {...form}>
+                                                <form
+                                                      className="flex items-center w-full pt-2 gap-x-2"
+                                                      onSubmit={form.handleSubmit(onSubmit)}>
+                                                      <FormField
+                                                            control={form.control}
+                                                            name='content'
+                                                            render={({ field }) => (
+                                                                  <FormItem
+                                                                        className="flex-1"
+                                                                  >
+                                                                        <FormControl>
+                                                                              <div className="relative w-full">
+                                                                                    <Input
+                                                                                          className="p-2 text-white bg-black border-0 dark:bg-zinc-800border-none focus-visible:ring-0 focus-visible:ring-offset-0 "
+                                                                                          placeholder="Edited Message" {...field}
+                                                                                          disabled={isLoading}
+                                                                                    />
+
+                                                                              </div>
+                                                                        </FormControl>
+                                                                  </FormItem>
+                                                            )}
+                                                      />
+                                                      <Button disabled={isLoading} size={'sm'} variant={'initial'}>
+                                                            Save
+                                                      </Button>
+                                                </form>
+                                                <span className="text-[12px] font-semibold mt-1 text-gray-400">
+                                                      Espace: Cancel, Enter: Save
+                                                </span>
+                                          </Form>
+                                    )
+                              }
                         </div>
                   </div>
-            </div>
+                  {
+                        canDeleteMessage && (
+                              <div className="absolute items-center justify-between hidden p-1 bg-white border rounded-sm group-hover:flex gap-x-2 -top-2 right-5 ">
+                                    {editMessage && (
+                                          <ActionTooltip label="EDIT">
+                                                <Edit2 className="w-4 h-4 ml-auto transition cursor-pointer text-zinc-600 hover:text-zinc-900"
+                                                      onClick={() => setIsEditing(true)}
+                                                />
+                                          </ActionTooltip>
+                                    )}
+                                    <ActionTooltip label="Delete">
+                                          <Trash2 className="w-4 h-4 ml-auto transition cursor-pointer text-zinc-600 hover:text-zinc-900" />
+                                    </ActionTooltip>
+                              </div>
+                        )
+                  }
+            </div >
       )
 }
