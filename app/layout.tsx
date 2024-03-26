@@ -14,7 +14,10 @@ export const metadata: Metadata = {
   title: 'WORKIFY',
   description: '',
 }
-
+type BaseThemeTaggedType = {
+  __type: string; // Example, replace with the actual type expected
+  // Other properties...
+};
 export default function RootLayout({
   children,
 }: {
@@ -22,14 +25,14 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider appearance={{
-      baseTheme: [neobrutalism],
+
       variables: { colorPrimary: '#6809C6' },
       signIn: {
-        baseTheme: [dark],
+
         variables: { colorPrimary: '#6809C6' }
       },
       signUp: {
-        baseTheme: [dark],
+
         variables: { colorPrimary: '#6809C6' }
       }
     }} >
