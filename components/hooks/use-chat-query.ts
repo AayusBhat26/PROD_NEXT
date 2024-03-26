@@ -13,7 +13,7 @@ interface ChatQueryProps {
 
 export const useChatQuery = ({ queryKey, apiUrl, paramKey, paramValue }: ChatQueryProps) => {
       const { isConnected } = useSocket();
-      const fetchMessages = async ({ pageParam = undefined }) => {
+      const fetchMessages = async ({ pageParam = '' }) => {
             // queryFn mai error "pageParm" mai undefined rkha tha isliye ho rha tha
             try {
                   const url = qs.stringifyUrl({
@@ -46,7 +46,7 @@ export const useChatQuery = ({ queryKey, apiUrl, paramKey, paramValue }: ChatQue
             // refetchInterval: 1000,
             refetchInterval: isConnected ? false : 500,
       });
-      console.log(isConnected);
+      // console.log(isConnected);
 
 
       return {
