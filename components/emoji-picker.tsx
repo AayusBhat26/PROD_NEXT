@@ -20,14 +20,17 @@ export const EmojiPicker = ({
                   <PopoverTrigger>
                         <Smile className="text-purple-500 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-purple-300" />
                   </PopoverTrigger>
-                  <PopoverContent side='right' sideOffSet={40}
-                        className='mb-16 bg-transparent border-none shadow-none drop-shadow-none'
+                  <PopoverContent
+                        side="right"
+                        sideOffset={40}
+                        className="mb-16 bg-transparent border-none shadow-none drop-shadow-none"
                   >
                         <Picker
                               theme={resolvedTheme}
-                              data={data} onEmojiSelect={(emoji: any) => onChange(emoji.native)}
+                              data={data}
+                              onEmojiSelect={(emoji: any) => onChange(emoji.native)}
                         />
                   </PopoverContent>
-            </Popover>
+            </Popover >
       )
 }
