@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useModal } from "../hooks/use-modal-store";
+import { useRouter, useParams } from "next/navigation";
 
 // form schema 
 const formSchema = z.object({
@@ -44,7 +45,16 @@ interface ChatItemsProps {
 }
 export const ChatItems = ({ id, content, member, timestamp, fileUrl, deleted, currentMember, isUpdated, socketUrl, socketQuery }: ChatItemsProps) => {
       const { onOpen } = useModal();
-
+      const params = useParams();
+      const router = useRouter();
+      const onMemberClick = () => {
+            if (member.id === currentMember.id) {
+                  return;
+            }
+            router.push(
+                  `/hubs/${params?.hubsId}/conversation/${member.id}`
+            )
+      }
       const form = useForm<z.infer<typeof formSchema>>({
             resolver: zodResolver(formSchema),
             defaultValues: {
@@ -104,13 +114,13 @@ export const ChatItems = ({ id, content, member, timestamp, fileUrl, deleted, cu
       return (
             <div className="relative flex w-full p-4 transition group itens-center hover:bg-black/5">
                   <div className="flex items-start w-full group gap-x-2">
-                        <div className="transition cursor-pointer hover:drop-shadow-md">
+                        <div onClick={onMemberClick} className="transition cursor-pointer hover:drop-shadow-md">
                               <UserAvatar src={member.profile.imageUrl || ''} />
                         </div>
                         <div className="flex flex-col w-full">
                               <div className="flex items-center gap-x-2">
                                     <div className="flex items-center">
-                                          <p className="text-sm font-semibold cursor-pointer hover:underline">
+                                          <p onClick={onMemberClick} className="text-sm font-semibold cursor-pointer hover:underline" >
                                                 {member.profile.name}
                                           </p>
                                           <ActionTooltip label={member.role}>
