@@ -25,13 +25,18 @@ const MemberIdPage = async ({
       if (!profile) return redirectToSignIn();
       const currentMember = await db.member.findFirst({
             where: {
-                  serverId: params.hubsId, profileId: profile.id
+                  serverId: params.hubsId,
+                  profileId: profile.id,
             },
             include: {
-                  profile: true
-            }
-      })
-      if (!currentProfile) return redirect('/');
+                  profile: true,
+            },
+      });
+
+      if (!currentMember) {
+            return redirect("/");
+      }
+      // serverId: params.hubsId, profileId: profile.id
       const conversation = await getOrCreateConversation(currentMember.id, params.memberId);
 
       if (!conversation) return redirect(`/hubs/${params.hubsId}`)
@@ -51,7 +56,7 @@ const MemberIdPage = async ({
                         <>
                               <ChatMessages
                                     member={currentMember}
-                                    name={otherMember.profile.name}
+                                    name={otherMember.profile.name || ""}
                                     chatId={conversation.id}
                                     type="conversation"
                                     apiUrl="/api/direct-messages"
@@ -61,10 +66,10 @@ const MemberIdPage = async ({
                                     socketQuery={{
                                           conversationId: conversation.id
                                     }}
-
+                                    fileUrl=""
                               />
                               <ChatInput
-                                    name={otherMember.profile.name}
+                                    name={otherMember.profile.name || ""}
                                     type="conversation"
                                     apiUrl="/api/socket/direct-messages"
                                     query={{
