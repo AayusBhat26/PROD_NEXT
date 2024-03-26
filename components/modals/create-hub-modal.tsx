@@ -78,8 +78,7 @@ export const CreateHubModal = () => {
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="p-0 overflow-hidden text-black bg-white">
-        <Dialog
-          className="px-6 pt-8">
+        <Dialog>
           <DialogTitle className="text-2xl font-bold text-center">
             CREATE A HUB
           </DialogTitle>
