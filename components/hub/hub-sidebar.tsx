@@ -147,12 +147,12 @@ export const HubSidebar = async ({
                                           },
                                           // members
                                           {
-                                                label: 'Members',
-                                                type: 'member',
+                                                label: "Members",
+                                                type: "member",
                                                 data: members?.map((member) => ({
                                                       id: member?.id,
-                                                      name: member?.profile?.name,
-                                                      icon: roleIconMap[member?.role]
+                                                      name: member?.profile.name || "",
+                                                      icon: roleIconMap[member?.role],
                                                 }))
                                           },
                                     ]}
