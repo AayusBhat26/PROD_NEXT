@@ -44,10 +44,10 @@ export const SocketProvider = ({
       socketInstance.on("disconnect", () => {
         setIsConnected(false);
       });
+      setSocket(socketInstance);
       return () => {
         socketInstance.disconnect();
       }
-      setSocket(socketInstance);
     } catch (error) {
       console.log("error in socket-provider", error);
       return;
