@@ -1,6 +1,6 @@
 "use client";
 
-import { 
+import {
   createContext,
   useContext,
   useEffect,
@@ -22,61 +22,38 @@ export const useSocket = () => {
   return useContext(SocketContext);
 };
 
-export const SocketProvider = ({ 
-  children 
-}: { 
-  children: React.ReactNode 
+export const SocketProvider = ({
+  children
+}: {
+  children: React.ReactNode
 }) => {
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
 
-<<<<<<< HEAD
-      useEffect(() => {
-            try {
-                  const socketInstance = new (ClientIO as any)(process.env.NEXT_PUBLIC_SITE_URL!, {
-                        path: "/api/socket/io",
-                        addTrailingSlash: false,
-                  });
-
-                  socketInstance.on("connect", () => {
-                        setIsConnected(true);
-                  });
-
-                  socketInstance.on("disconnect", () => {
-                        setIsConnected(false);
-                  });
-                  return () => {
-                        socketInstance.disconnect();
-                  }
-                  setSocket(socketInstance);
-            } catch (error) {
-                  console.log("error in socket-provider", error);
-                  return;
-            }
-
-      }, []);
-=======
   useEffect(() => {
-    const socketInstance = new (ClientIO as any)(process.env.NEXT_PUBLIC_SITE_URL!, {
-      path: "/api/socket/io",
-      addTrailingSlash: false,
-    });
+    try {
+      const socketInstance = new (ClientIO as any)(process.env.NEXT_PUBLIC_SITE_URL!, {
+        path: "/api/socket/io",
+        addTrailingSlash: false,
+      });
 
-    socketInstance.on("connect", () => {
-      setIsConnected(true);
-    });
+      socketInstance.on("connect", () => {
+        setIsConnected(true);
+      });
 
-    socketInstance.on("disconnect", () => {
-      setIsConnected(false);
-    });
-
-    setSocket(socketInstance);
-
-    return () => {
-      socketInstance.disconnect();
+      socketInstance.on("disconnect", () => {
+        setIsConnected(false);
+      });
+      return () => {
+        socketInstance.disconnect();
+      }
+      setSocket(socketInstance);
+    } catch (error) {
+      console.log("error in socket-provider", error);
+      return;
     }
+
   }, []);
->>>>>>> 4a8bd275615bb9ce5673ef6617165c4d4f83c6de
 
   return (
     <SocketContext.Provider value={{ socket, isConnected }}>
